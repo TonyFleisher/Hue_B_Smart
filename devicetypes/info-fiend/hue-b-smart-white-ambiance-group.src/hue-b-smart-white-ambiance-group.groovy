@@ -115,10 +115,6 @@ metadata {
 	details(["rich-control", "valueCT", "colorTemperature", "reset", "flash", "refresh", "groupID", "transitiontime"])
 }
 
-//void installed() {
-//	sendEvent(name: "DeviceWatch-Enroll", value: "{\"protocol\": \"LAN\", \"scheme\":\"untracked\", \"hubHardwareId\": \"${device.hub.hardwareID}\"}", displayed: false)
-//}
-
 private configure() {		
     def commandData = parent.getCommandData(device.deviceNetworkId)
     log.debug "${commandData = commandData}"
@@ -139,7 +135,7 @@ def installed() {
 
 def updated(){
 	log.debug "Updated Preferences"
-//	sendEvent(name: "transitionTime", value: tt)
+	sendEvent(name: "transitionTime", value: tt)
     initialize()
 }
 
@@ -228,28 +224,8 @@ def sendToHub(values) {
 	        body: sendBody 
 		])
 	)    
-//	sendEvent(name: "colormode", value: "HS") //, isStateChange: true) 
-//    sendEvent(name: "hue", value: values.hue) //, isStateChange: true) 
-//    sendEvent(name: "saturation", value: values.saturation, isStateChange: true) 
-    
-}
-
-def setHue(inHue) {
-	log.debug "Hue B Smart Ambience group: setHue()."
-        
-//	def sat = this.device.currentValue("saturation") ?: 100
-//	sendToHub([saturation:sat, hue:inHue])
 
 }
-
-def setSaturation(inSat) {
-	log.debug "Hue B Smart Ambience Group: setSaturation( ${inSat} )."
-
-//    def hue = this.device.currentValue("hue") ?: 100
-//	sendToHub([saturation:inSat, hue: hue])
-    
-}
-
 
 /**
  * capability.colorTemperature 
@@ -355,7 +331,7 @@ def refresh() {
 
 def reset() {
 	log.debug "Hue B Smart Ambience Group: reset()."
-    sendToHub ([level: 70, sat: 56, hue: 23])
+	setColorTemperature(3000)
 }
 
 /**
