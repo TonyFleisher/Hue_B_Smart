@@ -630,7 +630,7 @@ def chooseGroups(params) {
 			try { 
 				def d = addChildDevice("info_fiend", "Hue B Smart White Ambiance Group", devId, bridge.value.hub, ["label": g.label, "type": g.type, "groupType": "Ambiance Group", "allOn": g.all_on, "anyOn": g.any_on, "lights": g.lights])
 	    	    log.debug "adding group ${d}."	//  Are lights assigned? lights = ${g.lights}"     
-            	["bri", "on", "ct", "colormode", "effect"].each { p ->
+            	["bri", "on", "ct"].each { p ->
                 		d.updateStatus("action", p, g.action[p])                    
 				}
     	        d.updateStatus("action", "transitiontime", 4)
@@ -1264,7 +1264,7 @@ def itemDiscoveryHandler(evt) {
                 } else if (colormode != null && colormode.equals("ct")) {
                 	log.debug "Updating ambiance group: ${groupId}"
                 
-					["on", "bri", "ct", "effect", "colormode"].each { p -> 
+					["on", "bri", "ct"].each { p -> 
        	            	test = bridge.value.groups[groupId].action[p]
                    	    it.updateStatus("action", p, bridge.value.groups[groupId].action[p])                        
         			}
